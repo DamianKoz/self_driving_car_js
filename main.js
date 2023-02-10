@@ -1,5 +1,5 @@
 // Todos:
-// - Make them move on the lanes
+// - Fitness Function: Make them move on the lanes + Better if they pass more traffic
 // - Create more and random traffic
 // - Automatically restart if all cars are gone
 
@@ -15,9 +15,12 @@ const road = new Road(carCanvas.width / 2, carCanvas.width * 0.9);
 
 const carStartingPoint = road.getLaneCenter(Math.round(road.laneCount / 2 - 1));
 
-// const car = new Car(carStartingPoint, 100, 30, 50, "AI");
 const N = 100;
-const cars = generateCars(N);
+var cars = generateCars(N);
+
+console.log(cars);
+
+var traffic = generateTraffic();
 
 let bestCar = cars[0];
 if (localStorage.getItem("bestBrain")) {
@@ -28,16 +31,6 @@ if (localStorage.getItem("bestBrain")) {
     }
   }
 }
-
-const traffic = [
-  new Car(road.getLaneCenter(1), -100, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(2), -500, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(0), -400, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(0), -1300, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(2), -400, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(1), -800, 30, 50, "DUMMY", 2),
-  new Car(road.getLaneCenter(0), -1000, 30, 50, "DUMMY", 2),
-];
 
 animate();
 
@@ -57,6 +50,22 @@ function generateCars(N) {
   }
   return cars;
 }
+
+function generateTraffic(n = 8) {
+  return [
+    new Car(road.getLaneCenter(1), -100, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(0), -500, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(2), -500, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(1), -650, 30, 50, "DUMMY", 2),
+
+    new Car(road.getLaneCenter(1), -900, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(0), -800, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(2), -1000, 30, 50, "DUMMY", 2),
+    new Car(road.getLaneCenter(1), -1000, 30, 50, "DUMMY", 2),
+  ];
+}
+
+function updateTraffic() {}
 
 function animate() {
   for (let i = 0; i < traffic.length; i++) {
